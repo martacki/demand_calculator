@@ -2,6 +2,11 @@
 #
 # SPDX-License-Identifier: MIT
 
+rule prepare_cutout:
+    input: "input_files/cutouts/europe-{yr}-era5.nc"
+    output: "input_files/climate_data/t2m_d/temperature_{yr}.nc"
+    resources: mem_mb=500
+    script: "model/prepare_cutout.py"
 
 rule generate_peakdemand:
     input:
@@ -11,7 +16,6 @@ rule generate_peakdemand:
         climate_data        = "input_files/climate_data/t2m_d/temperature_{yr}.nc",
         country_convertor   = "input_files/demand_fit/dict_population_per_country.json"
     output:
-#        pop_per_country = "output/run3/energy_demand/pop_per_country_{yr}.nc",
         demand          = "output/run3/energy_demand/demand_{yr}.nc"
     threads: 1
     resources: mem_mb=500
