@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2022 Martha M. Frysztacki
+# SPDX-License-Identifier: MIT
+
+name: demand
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.8
+  - xarray=0.19.0
+  - geopandas
+  - cartopy
+  - cdo
+  - python-cdo
+  - regionmask
+  - pcraster
+  - netcdf4
+  - snakemake-minimal
