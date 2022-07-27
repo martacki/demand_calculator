@@ -6,15 +6,16 @@ import matplotlib.pyplot as plt
 import random as rd
 
 alpha3_to_alpha2 = {
-    'AUT': 'AT', 'UKR': 'UK', 'BIH': 'BA', 'BEL': 'BE',
-    'BGR': 'BG', 'CHE': 'CH', 'CYP': 'CY', 'CZE': 'CZ',
-    'DEU': 'DE', 'DNK': 'DK', 'EST': 'EE', 'GRC': 'GR',
-    'ESP': 'ES', 'FIN': 'FI', 'FRA': 'FR', 'HRV': 'HR',
-    'HUN': 'HU', 'IRL': 'IE', 'ISL': 'IS', 'ITA': 'IT',
-    'LTU': 'LT', 'LUX': 'LU', 'LVA': 'LV', 'MDA': 'MD',
-    'MNE': 'ME', 'MKD': 'MK', 'NLD': 'NL', 'NOR': 'NO',
-    'POL': 'PL', 'PRT': 'PT', 'ROU': 'RO', 'SRB': 'RS',
-    'SWE': 'SE', 'SVN': 'SI', 'SVK': 'SK', 'GBR': 'GB',
+    'ALB': 'AL', 'AUT': 'AT', 'UKR': 'UK', 'BIH': 'BA',
+    'BEL': 'BE', 'BGR': 'BG', 'CHE': 'CH', 'CYP': 'CY',
+    'CZE': 'CZ', 'DEU': 'DE', 'DNK': 'DK', 'EST': 'EE',
+    'GRC': 'GR', 'ESP': 'ES', 'FIN': 'FI', 'FRA': 'FR',
+    'HRV': 'HR', 'HUN': 'HU', 'IRL': 'IE', 'ISL': 'IS',
+    'ITA': 'IT', 'KOS': 'KV', 'LTU': 'LT', 'LUX': 'LU',
+    'LVA': 'LV', 'MDA': 'MD', 'MNE': 'ME', 'MKD': 'MK',
+    'NLD': 'NL', 'NOR': 'NO', 'POL': 'PL', 'PRT': 'PT',
+    'ROU': 'RO', 'SRB': 'RS', 'SWE': 'SE', 'SVN': 'SI',
+    'SVK': 'SK', 'GBR': 'GB',
 }
 
 reference_files = snakemake.input.reference
