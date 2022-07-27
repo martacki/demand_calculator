@@ -2,30 +2,6 @@ import numpy as np
 import xarray as xr
 import data_processing.attributes as attributes
 
-# =============================================================================
-# Demand modules
-# =============================================================================
-def _weighted_area_mean(data_array, data_weights):
-    """ 
-    Computes weighted mean over a surface area longitude and latitude
-
-    parameters
-    ----------
-    data_array (xarray.DataArray): array with data to be weighted wit lat and lon dimensions
-    data_weights (xarray.DataArray): weights of the data with lat and lon dimensions
-    
-    returns
-    -------
-    weighted_average (xarray.DataArray): average over surface area (lat, lon) for each timestep
-    """
-    weights = data_weights / data_weights.sum()
-    np.testing.assert_allclose(weights.sum().values, 1)
-    weighted_average = (data_array * weights).sum(dim=['lat','lon'], keep_attrs=True)
-    
-    return weighted_average
-
-
-
 def LSTRmodel(temp, v):
     """ 
     calculates energy demand based on fit variables and (population weighted) temperature 

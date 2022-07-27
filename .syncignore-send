@@ -1,0 +1,7 @@
+.snakemake
+.git
+__pycache__
+output
+climate_data/*
+gurobi.log
+input_files/cutouts

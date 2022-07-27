@@ -1,7 +1,3 @@
-
-import numpy as np
-import glob
-
 # timestep
 dt = 24
 # set namee of author and project for output files 
@@ -18,12 +14,3 @@ b = 33
 
 country_name_column ='TERRITORY1'
 abbreviation_column = 'ISO_TER1'
-
-### climate
-runs = ['2013']
-t2m_varname = 'temperature'
-ro_varname = 'ro' # runoff
-wind_varname = 'wind10m' # surface wind
-t2mmax_varname = 't2mmax' # max daily temperature
-rad_varname = 'rsds' # radiation 
-dis_varname = 'discharge' # discharge
