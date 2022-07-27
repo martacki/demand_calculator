@@ -21,10 +21,10 @@ rule generate_daily_demand:
     resources: mem_mb=500
     script: "run.py"
 
-rule generate_timeseries:
+rule generate_hourly_demand:
     input:
         demand_daily    = "output/energy_demand/demand_daily_{yr}.nc",
         reference       = expand("input_files/reference_demand/load_{yrs}.csv",
 						         yrs=[2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018])
-    output: "output/energy_demand/demand_hourly_{yr}.nc"
+    output: "output/energy_demand/demand_hourly_{yr}.csv"
     script: "model/demand_timeseries.py"
