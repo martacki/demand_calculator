@@ -8,7 +8,7 @@ rule prepare_cutout:
     resources: mem_mb=500
     script: "model/prepare_cutout.py"
 
-rule generate_peakdemand:
+rule generate_daily_demand:
     input:
         population          = "input_files/demand_fit/population_t2m_grid.nc",
         shapefile_countries = "input_files/EEZ_land_union_v3_202003/EEZ_Land_v3_202030.shp",
@@ -20,3 +20,11 @@ rule generate_peakdemand:
     threads: 1
     resources: mem_mb=500
     script: "run.py"
+
+rule generate_timeseries:
+    input:
+        demand    = "output/run3/energy_demand/demand_{yr}.nc",
+        reference = expand("input_files/reference_demand/load_{yrs}.csv",
+						   yrs=[2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018])
+    output: "output/run3/energy_demand/demand_timeseries_{yr}.nc"
+    script: "model/demand_timeseries.py"
