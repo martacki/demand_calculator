@@ -1,0 +1,10 @@
+
+.snakemake/
+.gitignore~
+
+input_files/cutouts/
+logs/
+output/
+trash/
+
+model/*.py~
