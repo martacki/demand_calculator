@@ -2,13 +2,6 @@ import pandas as pd
 import numpy as np
 import config
 
-### europe area 
-l = config.l
-r = config.r
-t = config.t
-b = config.b
-area = dict(lon=slice(l,r), lat=slice(t, b))
-
 l0=['ALB','AUT','UKR','BIH','BEL','BGR','CHE','CYP','CZE','DEU','DNK','EST','GRC','ESP','FIN',
     'FRA','HRV','HUN','IRL','ISL','ITA','LIE','LTU','LUX','LVA','MDA','MNE','MKD','MLT','NLD',
     'NOR','POL','PRT','ROU','SRB','SWE','SVN','SVK','TUR','GBR', 'GBR','XKX'
@@ -51,39 +44,9 @@ df_countries = pd.DataFrame(
     )
 ).rename_axis('index_nr').reset_index().set_index('ISO31661A3')
 
-# def save_country_dataset(ofile, dataset = df_countries):
-#     pd.to_csv(ofile)
-
-
 if config.selected_countries == 'europe':
     country_selection = df_countries.EU_map.dropna()
 else: 
-    country_selection = selected_countries
+    country_selection = config.selected_countries
 df_countries_select = df_countries.loc[country_selection.index.unique()]
 df_countries_select.replace("", np.nan, inplace=True)
-#------------------------------------------------------------------------------
-## Hydropower database mapping
-#------------------------------------------------------------------------------
-
-data_vars = ['name', 'id', 'fuel_type', 'technology_type', 'country', 'country_code',
-             'lat', 'lon', 'plant_capacity_MW', 'dam_height_m', 'pump_capacity_MW', 
-             'storage_capacity_MWh', 'volume_capacity_Mm3', 'avg_annual_generation_GWh', 
-             'efficiency', 'geo_id', 'wri_id', 'jrc_id', 'pypsa_id', 'gpd_id', 
-             'entsoe_id', 'opsd_id', 'carma_id', 'set', 'date_in', 'date_retrofit', 'duration'
-            ]
-
-jrc_mapping = ['name', 'id', 'Fueltype', 'type', 'country',  'country_code','lat',
-               'lon', 'installed_capacity_MW', 'dam_height_m', 'pumping_MW', 
-               'storage_capacity_MWh', 'Volume_Mm3', 'avg_annual_generation_GWh', '', 
-               'GEO', 'WRI', '', 'pypsa_id', '', '', '', '', '', '', '', ''
-              ]
-
-ppm_mapping = ['Name', '', 'Fueltype', 'Technology', 'Country', 'country_code','lat', 'lon',
-               'Capacity', 'DamHeight_m', '', '', 'Volume_Mm3', '', 'Efficiency', 'GEO_id', 
-               '', 'JRC_id', '', 'GPD_id', 'ENTSOE_id', 'OPSD_id', 'CARMA_id', 'Set', 'DateIn', 
-               'DateRetrofit', 'Duration'
-              ]
-
-df_hydro = pd.DataFrame(data= {'powerplantmatching' : ppm_mapping, 'jrc':jrc_mapping},
-                  index = data_vars)
-df_hydro.replace('', np.nan, inplace=True)

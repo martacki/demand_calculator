@@ -1,8 +1,6 @@
 import pandas as pd
 import xarray as xr
 import datetime
-import numpy as np
-import matplotlib.pyplot as plt
 import random as rd
 
 alpha3_to_alpha2 = {

@@ -1,6 +1,4 @@
 import xarray as xr
-import numpy as np
-import json
 
 def set_lat_lon_attributes(dataset, names=['lat', 'lon']):
     """
