@@ -10,7 +10,7 @@ alpha3_to_alpha2 = {
     'BGR': 'BG', 'CHE': 'CH', 'CYP': 'CY', 'CZE': 'CZ',
     'DEU': 'DE', 'DNK': 'DK', 'EST': 'EE', 'GRC': 'GR',
     'ESP': 'ES', 'FIN': 'FI', 'FRA': 'FR', 'HRV': 'HR',
-    'HUN': 'HU', 'IRL': 'IR', 'ISL': 'IS', 'ITA': 'IT',
+    'HUN': 'HU', 'IRL': 'IE', 'ISL': 'IS', 'ITA': 'IT',
     'LTU': 'LT', 'LUX': 'LU', 'LVA': 'LV', 'MDA': 'MD',
     'MNE': 'ME', 'MKD': 'MK', 'NLD': 'NL', 'NOR': 'NO',
     'POL': 'PL', 'PRT': 'PT', 'ROU': 'RO', 'SRB': 'RS',
