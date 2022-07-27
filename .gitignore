@@ -5,6 +5,8 @@
 input_files/cutouts/
 logs/
 output/
+climate_data/
 trash/
 
 model/*.py~
+gurobi.log

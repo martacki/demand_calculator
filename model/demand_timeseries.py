@@ -34,7 +34,7 @@ new_idx = [datetime.datetime(int(x.split(' ')[0].split('-')[0]),
 demand_ref.index = new_idx
 
 res_year = snakemake.wildcards.yr
-result = xr.open_dataset(snakemake.input.demand)
+result = xr.open_dataset(snakemake.input.demand_daily)
 result = result.sortby('time')
 
 daterange = pd.date_range(
