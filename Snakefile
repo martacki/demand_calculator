@@ -4,11 +4,17 @@
 
 rule all:
     input: expand("output/energy_demand/demand_hourly_{yr}.csv", yr=list(range(1951,2022)))
+    output: "output/energy_demand/demand_hourly.csv"
+    resources: mem_mb=8000
+    run:
+        import pandas as pd
+        df = pd.concat([pd.read_csv(f, index_col=0) for f in input], axis=0)
+        df.to_csv(output[0])
 
 rule prepare_cutout:
     input: "input_files/cutouts/europe-era5-{yr}.nc"
     output: "climate_data/temperature_{yr}.nc"
-    resources: mem_mb=500
+    resources: mem_mb=2000
     script: "model/prepare_cutout.py"
 
 rule generate_daily_demand:
@@ -23,8 +29,9 @@ rule generate_daily_demand:
         pop_per_country_nc = "output/resources/pop_per_country_{yr}.nc",
         pop_per_country_json = "output/resources/dict_pop_per_country_{yr}.nc",
         population_weights  = "output/resources/population_t2m_grid_weights_{yr}.nc",
+        population          = "output/resources/population_t2m_grid_{yr}.nc",
     threads: 1
-    resources: mem_mb=500
+    resources: mem_mb=8000
     script: "model/demand_daily.py"
 
 rule generate_hourly_demand:
@@ -33,6 +40,7 @@ rule generate_hourly_demand:
         reference       = expand("input_files/reference_demand/load_{yrs}.csv",
                                  yrs=[2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018])
     output: "output/energy_demand/demand_hourly_{yr}.csv"
+    resources: mem_mb=2000
     script: "model/demand_hourly.py"
 
 rule all_years:

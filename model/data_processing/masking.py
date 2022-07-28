@@ -4,7 +4,6 @@ import geopandas as gpd
 import regionmask
 import json
 
-import os
 import config
 
 def cut_box(dataset, lon_360=True):

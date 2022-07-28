@@ -1,4 +1,3 @@
-import os
 import sys
 import xarray as xr
 import numpy as np
@@ -20,7 +19,7 @@ df_countries = df_countries.loc[df_countries.EU_map.notna()]
 global_population = snakemake.input.population
 shapefile_countries = snakemake.input.shapefile_countries
 fitvalues_file = snakemake.input.demand_fit
-population_tempgrid = snakemake.input.population
+population_tempgrid = snakemake.output.population
 population_per_country_nc = snakemake.output.pop_per_country_nc
 population_per_country_json = snakemake.output.pop_per_country_json
 
@@ -83,7 +82,7 @@ ds_demand = xr.concat([ds_demand.isel(period=0), ds_demand.isel(period=1)], 'tim
 ds_demand = attributes.set_global_attributes(
     ds_demand, 'Entsoe-ERA5 fit and HW3', grid='gaussian n80', area='Europe')
     
-# celan file
+# clean  file
 ds_demand['demand'] = ds_demand.demand.transpose('time', 'country')
 ds_demand = ds_demand.drop('period').dropna(dim='time')
 # rename countries
