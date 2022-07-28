@@ -40,7 +40,7 @@ daterange = pd.date_range(
     start=f"{res_year[0:4]}-01-01", end=f"{int(res_year[0:4])+1}-01-01", inclusive="left", freq="1H"
 )
 
-demand_timeseries = pd.DataFrame(index=daterange, columns=demand_ref.columns[:-1], dtype='object')
+demand_hourly = pd.DataFrame(index=daterange, columns=demand_ref.columns[:-1], dtype='object')
 for doy in range(result.dims['time']): #doy = day of year
     result_month = str(result.time[doy].values).split('T')[0].split('-')[1]
     result_day = datetime.datetime(int(str(result.time[doy].values).split('T')[0].split('-')[0]),
@@ -61,9 +61,17 @@ for doy in range(result.dims['time']): #doy = day of year
     daily_demand.index = (
         pd.DataFrame(daily_demand).reset_index()['index'].map(alpha3_to_alpha2).values
     )
-    demand_timeseries.iloc[doy*24:(doy+1)*24] = (
-        (daily_demand * demand_ref_day_norm)[demand_timeseries.columns]
+    demand_hourly.iloc[doy*24:(doy+1)*24] = (
+        (daily_demand * demand_ref_day_norm)[demand_hourly.columns]
     )
 
-demand_timeseries = demand_timeseries.fillna(0)
-demand_timeseries.to_csv(snakemake.output[0])
+#snippet from pypsa-eur:
+if 'MK' in demand_hourly.columns:
+    if 'AL' not in demand_hourly.columns or demand_hourly.AL.isnull().values.all():
+        demand_hourly['AL'] = demand_hourly['MK'] * (4.1 / 7.4)
+    if 'RS' in demand_hourly.columns:
+        if 'KV' not in demand_hourly.columns or demand_hourly.KV.isnull().values.all():
+            demand_hourly['KV'] = demand_hourly['RS'] * (4.8 / 27.)
+
+demand_hourly = demand_hourly.fillna(0)
+demand_hourly.to_csv(snakemake.output[0])

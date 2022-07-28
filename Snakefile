@@ -25,12 +25,17 @@ rule generate_daily_demand:
         population_weights  = "output/resources/population_t2m_grid_weights_{yr}.nc",
     threads: 1
     resources: mem_mb=500
-    script: "run.py"
+    script: "model/demand_daily.py"
 
-rule generate_timeseries:
+rule generate_hourly_demand:
     input:
         demand_daily    = "output/energy_demand/demand_daily_{yr}.nc",
         reference       = expand("input_files/reference_demand/load_{yrs}.csv",
-						         yrs=[2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018])
+                                 yrs=[2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018])
     output: "output/energy_demand/demand_hourly_{yr}.csv"
-    script: "model/demand_timeseries.py"
+    script: "model/demand_hourly.py"
+
+rule all_years:
+    input:
+        demand_hourly = expand("output/energy_demand/demand_hourly_{yrs}.csv",
+                               yrs=[2013, 2014, 2015, 2016])
