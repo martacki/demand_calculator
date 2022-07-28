@@ -86,10 +86,10 @@ def _make_region_mask(
     # make polygon masks
     countries_mask_poly = regionmask.Regions(
         name = 'countries', 
-        numbers = geodf_selec.index_nr,#indexes, 
-        names = geodf_selec[country_name_column],#geodf[country_name_column][indexes], 
+        numbers = geodf_selec.index_nr,
+        names = geodf_selec[country_name_column],
         abbrevs = geodf_selec[abbreviation_column], 
-        outlines = list(x for x in geodf_selec.geometry.values)#list(geodf.geometry.values[i] for i in indexes)
+        outlines = list(x for x in geodf_selec.geometry.values)
     )
 
     if 'time' in dataset.dims:
@@ -209,7 +209,8 @@ def make_region_mask(region_selection,
 
 def cut_netcdf_into_regions(region_selection,
                             ifile,
-                            ofile, 
+                            ofile_nc,
+                            ofile_json,
                             shapefile_countries,
                             country_name_column = config.country_name_column, #config'ADMIN',
                             abbreviation_column = config.abbreviation_column, #'ADM0_A3',
@@ -226,7 +227,8 @@ def cut_netcdf_into_regions(region_selection,
     region_selection (list of strings): list with abbriviations of countries 
         to include in masking
     ifile (xarrayDataset): dataset to be masked to list of countries
-    ofile (xarrayDataArray): dataset with new dimension of regions that have been masked
+    ofile_nc (xarrayDataArray): dataset with new dimension of regions that have been masked
+    ofile_json (xarrayDataArray): dataset with new dimension of regions that have been masked
     shapefile_countries (shp): shapefile that contains the regions that need to be masked
     
     default parameters
@@ -260,7 +262,7 @@ def cut_netcdf_into_regions(region_selection,
         ds = cut_box(ds)
     ds_countries = (mask.mask * ds)
 
-    ds_countries.to_netcdf(ofile,'w')
+    ds_countries.to_netcdf(ofile_nc, 'w')
 
     if country_indexes is None:
         # also add country names to integers
@@ -271,14 +273,12 @@ def cut_netcdf_into_regions(region_selection,
         ordered_countries = [regions[abbreviation_column].iloc[x] for x in indexes]
         # create json object from remap dictionary
         map_of_names = dict(zip(indexes, ordered_countries))
-        fname = os.path.dirname(ofile) + 'dict_' + os.path.basename(ofile)[:-3] +'.json'
 
-        with open(fname, 'w') as fp:
+        with open(ofile_json, 'w') as fp:
             json.dump(map_of_names, fp)
 
     else:
         map_of_names =  dict(zip(country_indexes, region_selection))
-        fname = os.path.dirname(ofile) + 'dict_' + os.path.basename(ofile)[:-3] +'.json'
 
-        with open(fname, 'w') as fp:
+        with open(ofile_json, 'w') as fp:
             json.dump(map_of_names, fp)
