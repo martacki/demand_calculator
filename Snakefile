@@ -23,6 +23,7 @@ rule generate_daily_demand:
         shapefile_countries = "input_files/EEZ_land_union_v3_202003/EEZ_Land_v3_202030.shp",
         demand_fit          = "input_files/demand_fit/demand_fit_values.nc",
         country_convertor   = "input_files/demand_fit/dict_population_per_country.json",
+        noworkday           = "input_files/noworkday.csv",
         climate_data        = "climate_data/temperature_{yr}.nc",
     output:
         demand_daily = "output/energy_demand/demand_daily_{yr}.nc",
