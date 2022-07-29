@@ -1,6 +1,7 @@
 import sys
 import xarray as xr
 import numpy as np
+import pandas as pd
 import json
 
 sys.path.append('model/')
@@ -12,6 +13,10 @@ import energy_computation.demand as demand
 
 from cdo import Cdo
 cdo = Cdo()
+
+if "snakemake" not in globals():
+    from helper import mock_snakemake
+    snakemake = mock_snakemake('generate_daily_demand', yr=2013)
 
 df_countries = mappings.df_countries_select
 # demand uses EU_map so drop nan values 
@@ -38,6 +43,7 @@ cdo.remapsum(snakemake.input.climate_data,
      output=population_tempgrid,
      readCdf=True,
      options='-f nc')
+
 # take weights 
 pop_temp = xr.open_dataset(population_tempgrid,)
 weights = pop_temp/pop_temp.sum(dim=['lat', 'lon'])
@@ -61,30 +67,34 @@ ds_t2m["temperature"].attrs['units'] = 'degC'
 ds_t2m["temperature"].attrs.update(standard_name = "temperature")
 # prepare weighted temperature
 ds_demand = xr.Dataset()
-# next row kills the job
 ds_demand['temp'] = (ds_t2m["temperature"] * weights.population).sum(
     dim=['lat','lon'], keep_attrs=True)
-# to match dimensions of fitvalues (country,period) per weekend and weekday
-ds_demand = xr.concat(
-    [ds_demand.where(ds_demand['time.dayofweek']<5, drop=True),
-     ds_demand.where(ds_demand['time.dayofweek']>=5, drop=True)],
-    'period')
+# to match dimensions of fitvalues (country,period) perfv weekend and weekday
+
+country_mapping = df_countries[["nuts_id", "index_nr"]].dropna().set_index("nuts_id").squeeze()
+noworkday = pd.read_csv(snakemake.input.noworkday, index_col=0, parse_dates=True)
+noworkday = noworkday.rename(columns=country_mapping.astype(float))
+noworkday.columns.name = "country"
+noworkday.index.name = "time"
+
+df = ds_demand["temp"].to_pandas()
+
+ds_demand = xr.concat([
+    xr.Dataset(dict(temp=df.where(~noworkday).stack().to_xarray())),
+    xr.Dataset(dict(temp=df.where(noworkday).stack().to_xarray()))], "period"
+)
 ds_demand['period'] = ['weekday', 'weekend']
 # select only the countries that are in the input data and for which we have fitted data:
-countries = list(set(np.unique(ds_demand.country)).intersection(set(np.unique(fv.country.data))))
+countries = list(set(np.unique(noworkday.columns)).intersection(set(np.unique(fv.country.data))))
 ds_demand = ds_demand.sel(country = countries)
 fv = fv.sel(country = countries)
 # compute demand with fit variables
 ds_demand = demand.compute_demand(ds_demand, fv)
-# remove period dimension
-ds_demand = xr.concat([ds_demand.isel(period=0), ds_demand.isel(period=1)], 'time')
-# update attributes
+
+ds_demand = ds_demand.sum(dim='period').transpose('time', 'country')
 ds_demand = attributes.set_global_attributes(
     ds_demand, 'Entsoe-ERA5 fit and HW3', grid='gaussian n80', area='Europe')
     
-# clean  file
-ds_demand['demand'] = ds_demand.demand.transpose('time', 'country')
-ds_demand = ds_demand.drop('period').dropna(dim='time')
 # rename countries
 with open(snakemake.input.country_convertor) as f:
     data = json.load(f)
