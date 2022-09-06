@@ -27,7 +27,7 @@ The path to the directory into which the ``git repository`` is cloned, must **no
 
     /some/other/path % cd /some/path/without/spaces
 
-    /some/path/without/spaces % git clone https://github.com/PyPSA/pypsa-eur.git
+    /some/path/without/spaces % git clone https://github.com/martacki/demand_calculator.git
 
 ### Install Python Dependencies
 
