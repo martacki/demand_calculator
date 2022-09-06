@@ -38,9 +38,9 @@ For instructions for your operating system follow the ``conda`` [installation gu
 
 The python package requirements are curated in the [envs/environment.yaml](https://github.com/martacki/demand_calculator/blob/master/environment.yaml) file. The environment can be installed and activated using
 
-    .../pypsa-eur % conda env create -f envs/environment.yaml
+    .../demand_calculator % conda env create -f envs/environment.yaml
 
-    .../pypsa-eur % conda activate demand
+    .../demand_calculator % conda activate demand
 
 Note that activation is local to the currently open shell!
 After opening a new terminal window, one needs to reissue the second command!
