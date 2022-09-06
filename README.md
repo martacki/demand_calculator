@@ -58,5 +58,10 @@ and then install the environment with
 
 An exemplary result for Germany (DE) plot of an exemplary week of January, 2013 comparing the results of this workflow with the Open Power System Data.
 
-![ts-DE](https://user-images.githubusercontent.com/53824825/188664941-ca6bce27-428b-4d88-9655-47d6ea5d44c7.png)
+![ts-DE](https://user-images.githubusercontent.com/53824825/188665205-ddcd3697-db0c-413c-bcec-0dc17208f3cc.png)
+
+An exemplary result for Spain (ES) plot of an exemplary week of January, 2013 comparing the results of this workflow with the Open Power System Data.
+
+![ts-ES](https://user-images.githubusercontent.com/53824825/188665256-732bdc8c-5832-4885-8948-8f14180e949b.png)
+
 
