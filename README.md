@@ -58,5 +58,5 @@ and then install the environment with
 
 An exemplary result for Germany (DE) plot of an exemplary week of January, 2013 comparing the results of this workflow with the Open Power System Data.
 
-[ts-DE.pdf](https://github.com/martacki/demand_calculator/files/9498030/ts-DE.pdf)
+![ts-DE](https://user-images.githubusercontent.com/53824825/188664941-ca6bce27-428b-4d88-9655-47d6ea5d44c7.png)
 
