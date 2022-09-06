@@ -1,6 +1,6 @@
 # Interannual demand calculator (PyPSA-Eur compatible)
 
-Large parts of this code were originally developed by our colleague Lieke van der Most (University of Groningen) in her EU renewable energy modelling framework. The original version of the code can be found [here](https://github.com/L-vdM/EU-renewable-energy-modelling-framework) and is referenced below as [1]. This model has been validated against [ENTSO-E transparancy](https://transparency.entsoe.eu/) electricity production and demand data, and has been submitted for publication (April 2022).
+Large parts of this code were originally developed by our colleague [Lieke van der Most](https://github.com/L-vdM) (University of Groningen) in her EU renewable energy modelling framework. The original version of the code can be found [here](https://github.com/L-vdM/EU-renewable-energy-modelling-framework) and is referenced below as [1]. This model has been validated against [ENTSO-E transparancy](https://transparency.entsoe.eu/) electricity production and demand data, and has been submitted for publication (April 2022).
 
 The major differences are:
 - generation of hourly instead of daily electricity consumption profiles for the given set of countries in Europe
@@ -58,10 +58,10 @@ and then install the environment with
 
 An exemplary result for Germany (DE) plot of an exemplary week of January, 2013 comparing the results of this workflow with the Open Power System Data.
 
-![ts-DE](https://user-images.githubusercontent.com/53824825/188665205-ddcd3697-db0c-413c-bcec-0dc17208f3cc.png)
+![ts-DE](https://user-images.githubusercontent.com/53824825/188666599-bff05561-e601-40d0-9e90-51a6eb68455c.png)
 
 An exemplary result for Spain (ES) plot of an exemplary week of January, 2013 comparing the results of this workflow with the Open Power System Data.
 
-![ts-ES](https://user-images.githubusercontent.com/53824825/188665256-732bdc8c-5832-4885-8948-8f14180e949b.png)
+![ts-ES](https://user-images.githubusercontent.com/53824825/188666633-9844a3d8-fc60-4940-ad57-eb92b61dd6a6.png)
 
 
