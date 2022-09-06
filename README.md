@@ -40,7 +40,7 @@ The python package requirements are curated in the [envs/environment.yaml](https
 
     .../pypsa-eur % conda env create -f envs/environment.yaml
 
-    .../pypsa-eur % conda activate pypsa-eur
+    .../pypsa-eur % conda activate demand
 
 Note that activation is local to the currently open shell!
 After opening a new terminal window, one needs to reissue the second command!
