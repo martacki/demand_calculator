@@ -1,6 +1,6 @@
 # Interannual demand calculator (PyPSA-Eur compatible)
 
-Large parts of this code were originally developed by our colleague Lieke van der Most (University of Groningen) in her EU renewable energy modelling framework. The original version of the code can be found here: https://github.com/L-vdM/EU-renewable-energy-modelling-framework and is referenced below as [1].
+Large parts of this code were originally developed by our colleague Lieke van der Most (University of Groningen) in her EU renewable energy modelling framework. The original version of the code can be found [here](https://github.com/L-vdM/EU-renewable-energy-modelling-framework) and is referenced below as [1]. This model has been validated against [ENTSO-E transparancy](https://transparency.entsoe.eu/) electricity production and demand data, and has been submitted for publication (April 2022).
 
 The major differences are:
 - generation of hourly instead of daily electricity consumption profiles for the given set of countries in Europe
@@ -10,7 +10,7 @@ The major differences are:
 
 Variations in weather conditions typically are highly correlated with variations in electricity demand patterns and thus imply variations.
 This workflow provides a solution to generate electricity consumption time-series that depend on a given weather year and are compatible with the open source energy system model [PyPSA-Eur](https://github.com/PyPSA/pypsa-eur).
-This workflow calculates a daily electricity demand based on an evaluated package [1]. Then, it dis-aggregates the cumulative daily electricity demand to an hourly profile by sampling a random historical day (that is the same week-day) from the Open Power System Database (https://data.open-power-system-data.org/time_series/). The daily electricity demand is then distributed proportional to this sampled histrical data, resulting in an hourly profile. The resulting .csv document is compatible with PyPSA-Eur.
+This workflow calculates a daily electricity demand based on an evaluated package [1].  Then, it dis-aggregates the cumulative daily electricity demand to an hourly profile by sampling a random historical day (that is the same week-day) from the Open Power System Database (https://data.open-power-system-data.org/time_series/). The daily electricity demand is then distributed proportional to this sampled histrical data, resulting in an hourly profile. The resulting .csv document is compatible with PyPSA-Eur.
 
 # How To ...
 
