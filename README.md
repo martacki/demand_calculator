@@ -53,3 +53,10 @@ and then install the environment with
 
     mamba env create -f envs/environment.yaml
 
+
+# Example Output
+
+An exemplary result for Germany (DE) plot of an exemplary week of January, 2013 comparing the results of this workflow with the Open Power System Data.
+
+[ts-DE.pdf](https://github.com/martacki/demand_calculator/files/9498030/ts-DE.pdf)
+
