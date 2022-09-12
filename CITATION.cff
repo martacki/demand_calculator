@@ -1,0 +1,12 @@
+cff-version: 1.1.0
+title: "Interannual electricity demand calculator"
+repository: https://github.com/martacki/demand_calculator
+version: 0.1.0
+license: MIT
+authors:
+  - family-names: Frysztacki
+    given-names: Martha
+    orcid: https://orcid.org/0000-0002-0788-1328
+  - family-names: Neumann
+    given-names: Fabian
+    orcid: https://orcid.org/0000-0001-8551-1480

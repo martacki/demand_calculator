@@ -5,3 +5,4 @@ output
 climate_data/*
 gurobi.log
 input_files/cutouts
+.ipynb*
