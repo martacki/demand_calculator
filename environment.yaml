@@ -1,18 +1,17 @@
-# SPDX-FileCopyrightText: 2022 Martha M. Frysztacki
+# SPDX-FileCopyrightText: 2022 Martha M. Frysztacki, Fabian Neumann (TUB)
 # SPDX-License-Identifier: MIT
-
 name: demand
 channels:
-  - conda-forge
-  - bioconda
+- conda-forge
+- bioconda
 dependencies:
-  - python>=3.8
-  - pypsa
-  - pandas
-  - xarray=0.19.0
-  - geopandas
-  - cdo
-  - python-cdo
-  - regionmask
-  - netcdf4
-  - snakemake-minimal
+- python>=3.8
+- pypsa
+- pandas
+- xarray=0.19.0
+- geopandas
+- cdo
+- python-cdo
+- regionmask
+- netcdf4
+- snakemake-minimal

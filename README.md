@@ -1,67 +1,103 @@
-# Interannual demand calculator (PyPSA-Eur compatible)
+# Interannual Electricity Demand Calculator
 
-Large parts of this code were originally developed by our colleague [Lieke van der Most](https://github.com/L-vdM) (University of Groningen) in her EU renewable energy modelling framework. The original version of the code can be found [here](https://github.com/L-vdM/EU-renewable-energy-modelling-framework) and is referenced below as [1]. This model has been validated against [ENTSO-E transparancy](https://transparency.entsoe.eu/) electricity production and demand data, and has been submitted for publication (April 2022).
+Large parts of this code were originally developed by [Lieke van der
+Most](https://github.com/L-vdM) (University of Groningen) in the *EU renewable
+energy modelling framework*. The original version of the code can be found
+[here](https://github.com/L-vdM/EU-renewable-energy-modelling-framework) and is
+referenced below as [1]. This model has been validated against historical
+electricity demand data reported on the [ENTSO-E transparancy
+platform](https://transparency.entsoe.eu/).
 
-The major differences are:
-- generation of hourly instead of daily electricity consumption profiles for the given set of countries in Europe
-- workflow handling - we use snakemake, such that the workflow is comparable to PyPSA-Eur
+We have made the following adjustments to the original version:
 
-# Purpose
+- generate hourly instead of daily electricity consumption profiles
+- use `snakemake` for workflow management
+- trim repository to demand-related code and data
+- adjust code to accept cutouts from `atlite` for weather data
 
-Variations in weather conditions typically are highly correlated with variations in electricity demand patterns and thus imply variations.
-This workflow provides a solution to generate electricity consumption time-series that depend on a given weather year and are compatible with the open source energy system model [PyPSA-Eur](https://github.com/PyPSA/pypsa-eur).
-This workflow calculates a daily electricity demand based on an evaluated package [1].  Then, it dis-aggregates the cumulative daily electricity demand to an hourly profile by sampling a random historical day (that is the same week-day) from the Open Power System Database (https://data.open-power-system-data.org/time_series/). The daily electricity demand is then distributed proportional to this sampled histrical data, resulting in an hourly profile. The resulting .csv document is compatible with PyPSA-Eur.
+## Purpose
 
-# How To ...
+Variations in weather conditions affect electricity demand patterns. This
+workflow generates country-level electricity consumption time series based on
+weather data using analysis by [Lieke van der Most](https://github.com/L-vdM)
+correlating historical electricity demand to temperature. This workflow first
+calculates a daily electricity demand based on the regression model developed in
+[1]. Subsequently, cumulative daily electricity demands are disaggregated using
+a hourly profile sampled from a random historical day (that is the same weekday)
+from the [Open Power System
+Database](https://data.open-power-system-data.org/time_series/). The resulting
+`output/demand_hourly.csv` file is compatible with the open-source electricity
+system model [PyPSA-Eur](https://github.com/PyPSA/pypsa-eur).
 
-We set up the workflow to be easy to handle for [PyPSA-Eur](https://github.com/PyPSA/pypsa-eur) users by using the same workflow managment system `snakemake`. The only required input file, an `era5` cutout, can be recycled from [PyPSA-Eur](https://github.com/PyPSA/pypsa-eur) as well. The workflow automatically converts it to the required format.
+Holidays are treated like weekend days. Data on national holidays across Europe
+are obtained using another repository by [Aleksander
+Grochowicz](https://github.com/aleks-g) and others that similarly computes
+artificial electricity demand time series:
+[github.com/aleks-g/multidecade-data](https://github.com/aleks-g/multidecade-data/blob/v1.0/load%20data/create_artificial_demand.ipynb).
+The holidays are stored at `input_files/noworkday.csv`.
 
-The [PyPSA-Eur](https://github.com/PyPSA/pypsa-eur) cutout as has to be placed in ``input_files/cutouts``. After running the snakemake workflow, the output ``.csv`` file will be located in ``output/energy_demand/``.
-
-## Installation
+## Installation and Usage
 
 ### Clone the Repository
 
-First of all, clone the [demand_calculator](https://github.com/martacki/demand_calculator) repository using the version control system ``git``.
-The path to the directory into which the ``git repository`` is cloned, must **not** have any spaces! If you do not have ``git`` installed, follow installation instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
+Download the [demand_calculator](https://github.com/martacki/demand_calculator)
+repository using `git`.
 
-    /some/other/path % cd /some/path/without/spaces
+```bash
+/some/other/path % cd /some/path/without/spaces
+/some/path/without/spaces % git clone https://github.com/martacki/demand_calculator.git
+```
 
-    /some/path/without/spaces % git clone https://github.com/martacki/demand_calculator.git
+### Install Dependencies with conda/mamba
 
-### Install Python Dependencies
+Use [`conda`](https://docs.conda.io/en/latest/miniconda.html) or
+[`mamba`](https://github.com/QuantStack/mamba) to install the required packages
+listed in
+[environment.yaml](https://github.com/martacki/demand_calculator/blob/master/environment.yaml).
 
-The workflow relies on a set of other Python packages to function.
-We recommend using the package manager and environment management system ``conda`` to install them.
-Install [miniconda](https://docs.conda.io/en/latest/miniconda.html), which is a mini version of [Anaconda](https://www.anaconda.com/) that includes only ``conda`` and its dependencies or make sure ``conda`` is already installed on your system.
-For instructions for your operating system follow the ``conda`` [installation guide](https://docs.conda.io/projects/conda/en/latest/user-guide/install/).
+The environment can be installed and activated using
 
-The python package requirements are curated in the [envs/environment.yaml](https://github.com/martacki/demand_calculator/blob/master/environment.yaml) file. The environment can be installed and activated using
+```bash
+.../demand_calculator % conda env create -f environment.yaml
+.../demand_calculator % conda activate demand
+```
 
-    .../demand_calculator % conda env create -f envs/environment.yaml
+### Retrieve Input Data
 
-    .../demand_calculator % conda activate demand
+The only required additional input files are ERA5 cutouts which can be recycled
+from the [PyPSA-Eur weather data deposit on
+Zenodo](https://zenodo.org/record/6382570#.Yx4KN2xByV4). Place the file
+`europe-2013-era5.nc` in the following location (and rename!):
 
-Note that activation is local to the currently open shell!
-After opening a new terminal window, one needs to reissue the second command!
+```
+./input_files/cutouts/europe-era5-2013.nc
+```
 
-If you have troubles with a slow ``conda`` installation, we recommend to install [mamba](https://github.com/QuantStack/mamba) as a fast drop-in replacement via
+Cutouts for other weather years than 2013 can be built using the `build_cutout`
+rule from the [PyPSA-Eur](https://github.com/PyPSA/pypsa-eur) repository.
 
-    conda install -c conda-forge mamba
+### Run the Workflow
 
-and then install the environment with
+This repository uses `snakemake` for workflow management. To run the complete
+workflow, execute:
 
-    mamba env create -f envs/environment.yaml
+```bash
+.../demand_calculator % snakemake -jall all
+```
 
+After successfully running the workflow, the output files will be located in
+`output/energy_demand` named `demand_hourly_{yr}.csv`.
 
-# Example Output
+The years to compute can be modified directly in the `Snakefile`.
 
-An exemplary result for Germany (DE) plot of an exemplary week of January, 2013 comparing the results of this workflow with the Open Power System Data.
+## Example Outputs
+
+An exemplary result for Germany (DE) plot of an exemplary week of January, 2013
+comparing the results of this workflow with the Open Power System Data.
 
 ![ts-DE](https://user-images.githubusercontent.com/53824825/188666599-bff05561-e601-40d0-9e90-51a6eb68455c.png)
 
-An exemplary result for Spain (ES) plot of an exemplary week of January, 2013 comparing the results of this workflow with the Open Power System Data.
+An exemplary result for Spain (ES) plot of an exemplary week of January, 2013
+comparing the results of this workflow with the Open Power System Data.
 
 ![ts-ES](https://user-images.githubusercontent.com/53824825/188666633-9844a3d8-fc60-4940-ad57-eb92b61dd6a6.png)
-
-
