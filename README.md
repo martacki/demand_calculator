@@ -4,9 +4,9 @@ Large parts of this code were originally developed by [Lieke van der
 Most](https://github.com/L-vdM) (University of Groningen) in the *EU renewable
 energy modelling framework*. The original version of the code can be found
 [here](https://github.com/L-vdM/EU-renewable-energy-modelling-framework) and is
-referenced below as [1]. This model has been validated against historical
+referenced below as [1]. [1] has been validated against historical
 electricity demand data reported on the [ENTSO-E transparancy
-platform](https://transparency.entsoe.eu/).
+platform](https://transparency.entsoe.eu/). If you use this code, please refer to her work as well.
 
 We have made the following adjustments to the original version:
 
@@ -90,14 +90,14 @@ After successfully running the workflow, the output files will be located in
 
 The years to compute can be modified directly in the `Snakefile`.
 
-## Example Outputs
+## Example Plots of the Workflow Output
 
-An exemplary result for Germany (DE) plot of an exemplary week of January, 2013
-comparing the results of this workflow with the Open Power System Data.
+An exemplary plot of the result for Germany (DE) of an exemplary week of January, 2013
+comparing the results of this workflow with the [Open Power System Data](https://data.open-power-system-data.org/time_series/) in hourly resolution.
 
 ![ts-DE](https://user-images.githubusercontent.com/53824825/188666599-bff05561-e601-40d0-9e90-51a6eb68455c.png)
 
-An exemplary result for Spain (ES) plot of an exemplary week of January, 2013
-comparing the results of this workflow with the Open Power System Data.
+An exemplary plot of the result for Spain (ES) of an exemplary week of January, 2013
+comparing the results of this workflow with the [Open Power System Data](https://data.open-power-system-data.org/time_series/) in hourly resolution.
 
 ![ts-ES](https://user-images.githubusercontent.com/53824825/188666633-9844a3d8-fc60-4940-ad57-eb92b61dd6a6.png)
