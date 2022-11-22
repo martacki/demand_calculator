@@ -36,6 +36,11 @@ artificial electricity demand time series:
 [github.com/aleks-g/multidecade-data](https://github.com/aleks-g/multidecade-data/blob/v1.0/load%20data/create_artificial_demand.ipynb).
 The holidays are stored at `input_files/noworkday.csv`.
 
+## Exemplary Data
+
+Electricity consumption time-series for the years 1951-2021 and all European countries
+are available on [Zenodo](https://zenodo.org/record/7070438#.Y2OfViYo9hE).
+
 ## Installation and Usage
 
 ### Clone the Repository
