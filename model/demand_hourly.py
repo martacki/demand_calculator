@@ -97,7 +97,7 @@ for doy in range(result.dims["time"]):  # doy = day of year
     demand_ref_day = demand_ref.query("month == @result_month").loc[result_day]
     demand_ref_day.month = demand_ref_day.month.astype(int)
 
-    random_sel = rd.randint(0, len(demand_ref_day) / 24 - 1)
+    random_sel = rd.randint(0, int(len(demand_ref_day) / 24) - 1)
     ref_idx = [(random_sel) * 24, (random_sel + 1) * 24]
     demand_ref_day = demand_ref_day.iloc[ref_idx[0] : ref_idx[1]]
     demand_ref_day_norm = demand_ref_day / demand_ref_day.max()
