@@ -55,7 +55,12 @@ temp = temp.drop(
         "lon",
     ]
 )
+# Rename dimensions and coordinates
 temp = temp.rename_dims(rename_dict).rename(rename_dict)
+
+# Swap dims to ensure 'lon' and 'lat' are used as dimension names
+temp = temp.swap_dims({'lon': 'lon', 'lat': 'lat'})
+
 temp = temp.resample(time="1D").mean(dim="time")
 temp = set_lat_lon_attributes(temp)
 temp.to_netcdf(snakemake.output[0])

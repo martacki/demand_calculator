@@ -105,7 +105,7 @@ def _make_region_mask(
         layer = dataset
 
     # make dataset mask based on polys
-    mask = countries_mask_poly.mask(layer, lat_name="lat", lon_name="lon")
+    mask = countries_mask_poly.mask(layer)
 
     if no_numbers:
         mask = xr.where(mask >= 0, 1, mask)
